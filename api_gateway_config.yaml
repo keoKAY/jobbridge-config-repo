@@ -1,0 +1,82 @@
+server: 
+    port: 8080 
+spring:
+    application:
+        name: apigateways
+    cloud:
+        gateway:
+            globalcors:
+                cors-configurations:
+                  '[/**]':  # Apply to all paths
+                    allowedOrigins:
+                      - "http://localhost:5173"
+                      - "http://localhost:3000"
+                      - "https://istad-jobseek.vercel.app"
+                      - "https://job-seek-seven.vercel.app"
+                    allowedMethods:
+                      - GET
+                      - POST
+                      - PUT
+                      - DELETE
+                      - OPTIONS
+                    allowedHeaders: "*"
+                    allowCredentials: true
+                    max-age: 3600
+            discovery:
+              locator:
+                enabled: false 
+                lower-case-service-id: true
+            default-filters:
+              - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            # globalcors:
+            #   corsConfigurations:
+            #     '[/**]':
+            #       allowedOrigins: "http://localhost:5173"
+            #       allowedMethods:
+            #         - GET
+            #         - POST
+            #       allowedHeaders: "*"
+            routes:
+              - id: user-service 
+                uri: lb://user-service # forward requests to user-service 
+                predicates: 
+                  - Path=/api/users/**
+                # metadata:
+                #   cors: 
+                #     allowedOrigins: "*"
+                #     allowedMethods: "GET,POST,PUT,DELETE,OPTIONS"
+                #     maxAge:  3600 
+                #     allowedHeaders: "*"
+
+                # filters:
+                # - name: AddRequestHeader 
+                #   args:
+                #     name: "Access-Control-Allow-Origin"
+                #     value: "http://localhost:8080,http://localhost:5173"
+                # - name: AddRequestHeader
+                #   args:
+                #     name: "Access-Control-Allow-Methods"
+                #     value: "GET, POST, PUT, DELETE"  # Include the methods you're using
+                # - name: AddRequestHeader
+                #   args: 
+                #     name: "Access-Control-Allow-Headers"
+                #     value: "Content-Type, Authorization"  # Include any headers you're using
+               
+               # filters:
+               # -  StripPrefix=1
+              - id: job-service 
+                uri: lb://job-service
+                predicates:
+                  - Path=/api/jobs-service/** 
+eureka: 
+  client: 
+    service-url: 
+      #defaultZone: http://eureka-service:8761/eureka
+       defaultZone: http://localhost:8761/eureka
+logging:
+  level:
+    reactor.netty.http.client: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web.reactive.function.client.ExchangeFunctions: DEBUG
+
+

@@ -1,0 +1,44 @@
+# Improvise: we could change the server-url here in the .env as well for better maintainance. 
+keycloak: 
+    server-url: ${KEYCLOAK_SERVER_URL}
+    realm: ${KEYCLOAK_CLIENT_REALM}
+    client-id: ${KEYCLOAK_CLIENT_ID}
+    client-secret: ${KEYCLOAK_CLIENT_SECRET}
+    jwk-set-uri: ${KEYCLOAK_SERVER_URL}/realms/${KEYCLOAK_CLIENT_REALM}/protocol/openid-connect/certs
+    email-verified: ${KEYCLOAK_EMAIL_VERIFIED} 
+server:
+  port: 8081
+spring:
+    main:
+     web-application-type: servlet
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: ${KEYCLOAK_SERVER_URL}/realms/${KEYCLOAK_CLIENT_REALM}
+                    jwk-set-uri: ${KEYCLOAK_SERVER_URL}/realms/${KEYCLOAK_CLIENT_REALM}/protocol/openid-connect/certs
+    application:
+        name: user-service
+    datasource:
+        url: ${DATABASE_URL}
+        username: ${DATABASE_USERNAME}
+        password: ${DATABASE_PASSWORD}
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
+eureka: 
+    instance:
+        prefer-ip-address: true 
+        
+    client: 
+        
+        service-url: 
+            defaultZone: ${EUREKA_URL}
+logging: 
+    level: 
+        org: 
+            keycloak: DEBUG 

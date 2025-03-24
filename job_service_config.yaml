@@ -1,0 +1,37 @@
+user: 
+    service: 
+        url: ${USER_SERVICE_URL:http://localhost:8081}
+keycloak: 
+    server-url: ${KEYCLOAK_SERVER_URL}
+    realm: ${KEYCLOAK_CLIENT_REALM}
+    client-id: ${KEYCLOAK_CLIENT_ID}
+    client-secret: ${KEYCLOAK_CLIENT_SECRET}
+    jwk-set-uri: ${KEYCLOAK_SERVER_URL}/realms/${KEYCLOAK_CLIENT_REALM}/protocol/openid-connect/certs
+server: 
+    port: 8082
+spring:
+    application:
+        name: job-service
+    datasource:
+        url: ${DATABASE_URL}
+        username: ${DATABASE_USERNAME:whatever}
+        password: ${DATABASE_PASSWORD:whateverman}
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: ${keycloak.server-url}/realms/${keycloak.realm}
+                    jwk-set-uri: ${keycloak.server-url}/realms/${keycloak.realm}/protocol/openid-connect/certs
+
+eureka: 
+    client: 
+        service-url: 
+            defaultZone: ${EUREKA_URL}
+ 
