@@ -1,4 +1,4 @@
-# Improvise: we could change the server-url here in the .env as well for better maintainance. 
+# Improvise: we could change the server-url here in the .env as well for better maintainance 
 keycloak: 
     server-url: ${KEYCLOAK_SERVER_URL}
     realm: ${KEYCLOAK_CLIENT_REALM}
