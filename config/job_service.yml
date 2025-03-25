@@ -1,6 +1,6 @@
 user: 
     service: 
-        url: ${USER_SERVICE_URL:http://localhost:8081}
+        url: ${USER_SERVICE_URL:http://user-service:8081}
 keycloak: 
     server-url: ${KEYCLOAK_SERVER_URL}
     realm: ${KEYCLOAK_CLIENT_REALM}
