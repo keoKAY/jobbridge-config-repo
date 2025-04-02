@@ -10,6 +10,14 @@ keycloak:
 server: 
     port: 8082
 spring:
+    redis:: 
+        host: ${REDIS_HOST}
+        port: ${REDIS_PORT}
+        #password: ${REDIS_PASSWORD}
+        #database: ${REDIS_DATABASE}
+    cache: 
+        redis: 
+            time-to-live: 60000 # 1 minute
     application:
         name: job-service
     datasource:
