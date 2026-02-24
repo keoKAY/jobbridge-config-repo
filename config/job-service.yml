@@ -10,7 +10,7 @@ keycloak:
 server: 
     port: 8082
 spring:
-    redis:: 
+    redis:
         host: ${REDIS_HOST}
         port: ${REDIS_PORT}
         #password: ${REDIS_PASSWORD}
