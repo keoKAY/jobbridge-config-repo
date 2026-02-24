@@ -13,6 +13,8 @@ spring:
     redis:
         host: ${REDIS_HOST:redis}
         port: ${REDIS_PORT:6379}
+        repositories: 
+            enabled: false 
         #password: ${REDIS_PASSWORD}
         #database: ${REDIS_DATABASE}
     cache: 
